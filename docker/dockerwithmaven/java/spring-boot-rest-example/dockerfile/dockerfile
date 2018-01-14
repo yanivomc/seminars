@@ -1,5 +1,5 @@
 # Java8 Alpine Release
-from frolvlad/alpine-oraclejdk8:slim
+FROM frolvlad/alpine-oraclejdk8:slim
 # configure WorkDir
 WORKDIR /app
 # Mount HOST Folder 
