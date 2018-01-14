@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.spotify.it</groupId>
+  <artifactId>boot</artifactId>
+  <version>0.0.1-SNAPSHOOT</version>
+  <packaging>jar</packaging>
+
+  <description>The Dockerfile is built, and later put into a repository</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<project.dockerArtifactId>jb-springboot-example</project.dockerArtifactId>
+  </properties>
+	
+	<build>
+		<resources>
+			<resource>
+				<!--  <directory>src/main/resources</directory> -->
+				<directory>artifact</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+			<!-- Docker Build -->
+		<plugins>
+			<plugin>
+  				<artifactId>maven-war-plugin</artifactId>
+  				<version>3.0.0</version>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.10</version>
+				<configuration>
+					<imageName>yanivomc/${project.dockerArtifactId}</imageName>
+					<dockerDirectory>dockerfile</dockerDirectory>
+					<resources>
+           				<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.artifactId}-${project.version}.${project.packaging}</include>
+           				</resource>
+					</resources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
