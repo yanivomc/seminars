@@ -1,0 +1,14 @@
+# Java8 Alpine Release
+FROM frolvlad/alpine-oraclejdk8:slim
+# configure WorkDir
+WORKDIR /app
+# Mount HOST Folder 
+VOLUME /app
+# Copy Spring Boot File to target
+COPY artifact/spring-boot-rest-example-0.4.0.war /app/spring-boot-rest-example-0.4.0.war
+#Expose Ports - ONLY EXPOSED - IT’S NOT Mapped. -p will be needed on run
+EXPOSE 8091
+EXPOSE 8090
+RUN echo "Build Completed"
+# Command to run (Entry Point)
+CMD java -jar -Dspring.profiles.active=test /app/spring-boot-rest-example-0.4.0.war
