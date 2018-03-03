@@ -1,1 +1,3 @@
 docker/dockerwithmaven/java/target
+docker/playground/labs/labdockercompose/mysql_data
+docker/playground/labs/labdockercompose/artifacts
