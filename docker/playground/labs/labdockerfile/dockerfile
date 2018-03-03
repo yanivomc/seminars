@@ -1,0 +1,6 @@
+FROM frolvlad/alpine-oraclejdk8:slim 
+WORKDIR /app
+VOLUME [ "/data/" ]
+COPY ./artifacts/spring-music.jar /app
+EXPOSE 8080:8080
+CMD java -jar -Dspring.profiles.active /app/spring-music.jar
