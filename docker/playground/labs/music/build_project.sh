@@ -2,26 +2,13 @@
 
 ########################################################################
 # title:          Build Complete Project
-# author:         Gary A. Stafford (https://programmaticponderings.com)
-# url:            https://github.com/garystafford/sprint-music-docker
+# author:         Yaniv Cohen
+# url:            https://github.com/yanivomc/seminars/tree/master/docker/playground/labs/spring-music-docker
 # description:    Clone and build complete Spring Music Docker project
-# usage:          sh ./build_project.sh
+# usage:           ./build_project.sh
 ########################################################################
 
 set -ex
-
-# clone project
-git clone -b docker_v2 --single-branch \
-  https://github.com/garystafford/spring-music-docker.git music \
-  && cd "$_"
-
-# provision VirtualBox VM
-docker-machine create --driver virtualbox springmusic
-
-# set new environment
-docker-machine env springmusic \
-  && eval "$(docker-machine env springmusic)"
-
 # mount a named volume on host to store mongo and elk data
 # ** assumes your project folder is 'music' **
 docker volume create --name music_data
