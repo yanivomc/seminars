@@ -1,0 +1,61 @@
+version: '2'
+
+services:
+  proxy:
+    build: nginx/
+    ports:
+    - 80:80
+    networks:
+    - net
+    depends_on:
+    - app
+    hostname: proxy
+    container_name: proxy
+
+  app:
+    build: tomcat/
+    ports:
+    - 8080
+    networks:
+    - net
+    depends_on:
+    - mongodb
+    hostname: app
+
+  mongodb:
+    build: mongodb/
+    ports:
+    - 27017:27017
+    networks:
+    - net
+    depends_on:
+    - elk
+    hostname: mongodb
+    container_name: mongodb
+    volumes:
+    - music_data:/data/db
+    - music_data:/data/configdb
+
+  elk:
+    image: sebp/elk:latest
+    ports:
+    - 5601:5601
+    - 9200:9200
+    - 5044:5044
+    - 5000:5000
+    networks:
+    - net
+    volumes:
+    - music_elk:/var/lib/elasticsearch
+    hostname: elk
+    container_name: elk
+
+volumes:
+  music_data:
+    external: true
+  music_elk:
+    external: true
+
+networks:
+  net:
+    driver: bridge
