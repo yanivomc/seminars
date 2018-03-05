@@ -35,7 +35,7 @@ build/
 .rvmrc
 
 *.war
-*.zip
+#*.zip
 /build-artifacts/
 
 tmp info
