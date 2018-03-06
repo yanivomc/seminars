@@ -2,8 +2,8 @@
 
 FROM nginx:latest
 
-MAINTAINER Gary A. Stafford <garystafford@rochester.rr.com>
-ENV REFRESHED_AT 2016-09-17
+
+ENV REFRESHED_AT 2018-03-02
 
 ENV GITHUB_REPO https://github.com/yanivomc/seminars/raw/master/docker/playground/labs/music/static-content/
 ENV STATIC_FILE static.zip
