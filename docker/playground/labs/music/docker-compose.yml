@@ -35,14 +35,14 @@ services:
     volumes:
     - music_data:/data/db
     - music_data:/data/configdb
-
+  #docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk
   elk:
     image: sebp/elk:latest
     ports:
     - 5601:5601
     - 9200:9200
     - 5044:5044
-    - 5000:5000
+   # - 5000:5000
     networks:
     - net
     volumes:
