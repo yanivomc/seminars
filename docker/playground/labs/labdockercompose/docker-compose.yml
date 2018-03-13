@@ -8,7 +8,7 @@ services:
    ports: 
      - 8080:8080
    volumes: 
-       - ./artifacts/:/code
+       - artifacts:/code
    networks: # Define netwroks per service / role
      - db_layer
      - app_layer
@@ -29,13 +29,8 @@ services:
     networks:
       - db_layer
     volumes: 
-      - ./mysql_data:/app
-    healthcheck:
-        test: ../healthchecks/mysql.sh
-        interval: 15s
-        timeout: 2s
-        retries: 2
-    
+      - logicalVoloume01:/app
+
 # this will replace:  
  #docker run --rm -itd --network db_layer  --name db_mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=music -p 3306:3306 -v $(pwd):/app wangxian/alpine-mysql
 
@@ -47,4 +42,5 @@ networks: # custome configuration per network defined
 
 volumes:
  logicalVoloume01:
+ artifacts:
 
