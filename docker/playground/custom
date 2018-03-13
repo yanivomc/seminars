@@ -2,4 +2,4 @@ FROM frolvlad/alpine-oraclejdk8:slim
 WORKDIR /data
 COPY ./spring-music.jar /app/spring-music.jar
 EXPOSE 8080
-CMD .....
+CMD ash
