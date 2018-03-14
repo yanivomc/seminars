@@ -2,7 +2,7 @@ output:
   logstash:
     enabled: true
     hosts:
-      - elk:5044
+      - localhost:5000
     timeout: 15
     tls:
       certificate_authorities:

@@ -28,27 +28,17 @@ services:
     - 27017:27017
     networks:
     - net
-    depends_on:
-    - elk
+    #depends_on:
+    #- elk
     hostname: mongodb
     container_name: mongodb
     volumes:
     - music_data:/data/db
     - music_data:/data/configdb
-  #docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk sebp/elk
-  elk:
-    image: sebp/elk:latest
-    ports:
-    - 5601:5601
-    - 9200:9200
-    - 5044:5044
-   # - 5000:5000
-    networks:
-    - net
-    volumes:
-    - music_elk:/var/lib/elasticsearch
-    hostname: elk
-    container_name: elk
+  
+  
+  #IMPLMENT YOUR WORKING ELK BELOW
+  
 
 volumes:
   music_data:
