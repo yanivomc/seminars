@@ -42,9 +42,8 @@ services:
 
 volumes:
   music_data:
-    external: true
   music_elk:
-    external: true
+    
 
 networks:
   net:
