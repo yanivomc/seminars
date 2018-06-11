@@ -1,15 +1,17 @@
-version: '3' # Docker-compose yml version for docker compose builder
+version: '2.3' # Docker-compose yml version for docker compose builder
 services: 
   web: 
    build: .
    depends_on:
-     - db_mysql
+      db_mysql:
+       condition: service_healthy
      
    ports: 
      - 80:8080
    networks: # Define netwroks per service / role
      - db_layer
      - app_layer
+    
    entrypoint: ["java", "-jar" , "-Dspring.profiles.active=mysql" , "spring-music.jar"] 
      
   
@@ -25,7 +27,12 @@ services:
       - db_layer
     volumes: 
       - ./mysql_data:/app
-   
+    healthcheck:
+        test: "/usr/bin/mysql --execute \"SHOW DATABASES;\""
+        # test: "/usr/local/mysql/bin/mysql --user=foo --password=foo --execute \"SHOW DATABASES;\""
+        interval: 3s
+        timeout: 1s
+        retries: 5
     
 
 
