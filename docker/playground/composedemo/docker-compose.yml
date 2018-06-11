@@ -1,18 +1,16 @@
 version: '3' # Docker-compose yml version for docker compose builder
 services: 
   web: 
-   build: ./builder/web/
+   build: .
    depends_on:
      - db_mysql
      
    ports: 
-     - 8080:8080
-   volumes: 
-       - ./artifacts/:/code
+     - 80:8080
    networks: # Define netwroks per service / role
      - db_layer
      - app_layer
-   entrypoint: ash ## this wil overide the CMD / entrypoint in our dockerfile
+   entrypoint: ["java", "-jar" , "-Dspring.profiles.active=mysql" , "spring-music.jar"] 
      
   
   
@@ -29,8 +27,7 @@ services:
       - ./mysql_data:/app
    
     
-# this will replace:  
- #docker run --rm -itd --network db_layer  --name db_mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=music -p 3306:3306 -v $(pwd):/app wangxian/alpine-mysql
+
 
 networks: # custome configuration per network defined
  db_layer:
