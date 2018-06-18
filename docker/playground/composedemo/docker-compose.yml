@@ -7,7 +7,7 @@ services:
        condition: service_healthy
      
    ports: 
-     - 80:8080
+     - 8080
    networks: # Define netwroks per service / role
      - db_layer
      - app_layer
