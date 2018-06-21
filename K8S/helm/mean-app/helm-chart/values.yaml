@@ -3,9 +3,10 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: bitnami/my-mean-app
+  repository: USERNAME/my-mean-app # Change
   tag: 0.1.0
   pullPolicy: IfNotPresent
+  pullSecret: secretnameTOpull # Change
 service:
   name: mean-k8s
   type: NodePort

@@ -1,11 +1,12 @@
 version: '2.3' # Docker-compose yml version for docker compose builder
 services: 
   web: 
-   build: .
+   image: springtest:1
    depends_on:
       db_mysql:
        condition: service_healthy
-     
+   volumes: 
+      - ./:/artifacts
    ports: 
      - 8080
    networks: # Define netwroks per service / role
