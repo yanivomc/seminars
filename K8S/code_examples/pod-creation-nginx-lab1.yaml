@@ -19,7 +19,7 @@ spec:
     - name: GIT_REPO # KEY
       value: https://github.com/cfjedimaster/HTML-Code-Demos.git # VALUE
     command: ["git"] # Running a shell command on container boot
-    args: ["clone", "$(GIT_REPO)", "/data-files"]
+    args: ["clone", "https://github.com/cfjedimaster/HTML-Code-Demos.git", "/data-files"]
    
 # Creating Volumes to be used by the above containers
   volumes:
