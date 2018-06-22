@@ -16,7 +16,7 @@ spec:
     spec:
       imagePullSecrets:
         - name: {{ .Values.image.pullSecret }}  
-    spec:
+#    spec:
       securityContext:
         runAsUser: 1001
         fsGroup: 1001
