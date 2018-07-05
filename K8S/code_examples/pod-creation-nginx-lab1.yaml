@@ -16,7 +16,7 @@ spec:
     - name: GIT_REPO # KEY
       value: https://github.com/cfjedimaster/HTML-Code-Demos.git # VALUE
     command: ["git"]
-    args: ["clone", "https://github.com/cfjedimaster/HTML-Code-Demos.git", "/data-files/"]
+    args: ["clone", "$GIT_REPO", "/data-files/"]
     volumeMounts:
     - mountPath: /data-files
       name: data-volume # Volume name that we created
