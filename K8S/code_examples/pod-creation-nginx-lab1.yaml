@@ -1,28 +1,27 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
+  name: app-test-1
 spec:
-  containers: 
+  containers:
   - name: nginx   # FIRST Container
     image: nginx:latest
     volumeMounts:
     - mountPath: /srv/www # Mount location within a container
-      name: data-volume # Volume name that we created 
-      readOnly: true # Read Only or not 
+      name: data-volume # Volume name that we created
+      readOnly: true # Read Only or not
   - name: sidecar-staticgen # SECOND Container
     image: alpine/git:latest
-    volumeMounts:
-    - mountPath: /data-files
-      name: data-volume # Volume name that we created
     env: # ENVIRONMENT Variables
     - name: GIT_REPO # KEY
       value: https://github.com/cfjedimaster/HTML-Code-Demos.git # VALUE
-    command: ["git"] # Running a shell command on container boot
-    args: ["clone", "https://github.com/cfjedimaster/HTML-Code-Demos.git", "/data-files"]
-   
+    command: ["git"]
+    args: ["clone", "https://github.com/cfjedimaster/HTML-Code-Demos.git", "/data-files/"]
+    volumeMounts:
+    - mountPath: /data-files
+      name: data-volume # Volume name that we created
+
 # Creating Volumes to be used by the above containers
   volumes:
   - name: data-volume
     emptyDir: {} # Volume Drive
-  
