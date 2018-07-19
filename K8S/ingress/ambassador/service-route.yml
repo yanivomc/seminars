@@ -1,0 +1,22 @@
+#### This is a demo file to expose a service in K8S to ambassador
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name:  spring-music
+      prefix: /spring/
+      service: spring-music
+spec:
+  selector:
+    run: spring-music
+  ports:
+  - port: 80
+    name: http-spring
+    targetPort: spring-music
