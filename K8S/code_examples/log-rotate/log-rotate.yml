@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+ name: log-rotate
+spec:
+ template:
+   metadata:
+     labels:
+       log-rotate: containers
+   spec:
+     containers:
+     - name: log-rotate
+       image: blacklabelops/logrotate
+       env:
+        - name: LOGS_DIRECTORIES
+          value: "/var/lib/docker/containers /var/log/docker"
+       imagePullPolicy: Always
+       volumeMounts:
+       - name: containers
+         mountPath: /var/lib/docker/containers
+       - name: docker
+         mountPath: /var/log/docker
+     volumes:
+     - name: containers
+       hostPath:
+         path: /var/lib/docker/containers
+     - name: docker
+       hostPath:
+         path: /var/log/docker
+ 
