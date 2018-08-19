@@ -1,0 +1,29 @@
+// elasticsearch - fuzzy query.json
+
+// Searching for a key that contain a misspelling 
+// will produce zero results but with fuzzy query enabled
+// we can allow 1 - x number of misspeliing 
+
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+
+{
+	"query" : {
+		"match": {"title": "intersteller"}
+	}
+}
+
+' 
+ // >> output - 0
+
+ curl -X GET "localhost:9200/movies/_search?pretty" -d'
+
+{
+	"query" : {
+		"fuzzy" : {
+			"title": {"value": "intersteller", "fuzziness": 1}
+	}
+}
+}
+
+' 
+// >> output - fixed

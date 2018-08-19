@@ -1,0 +1,105 @@
+// elasticearch - search as you type.json (autocomplete)
+// Using elasticsearch analyzer - autocomplete to allow search as we type completion (such as in goolge / wiki)
+// to allow this we first need to make sure our mapping index is built correctly from the beggining 
+
+
+
+
+// 1. Delete index
+curl -XDELETE localhost:9200/movies
+
+// 2. Create new custom analyzer for our index moives to use
+
+curl -X PUT "localhost:9200/movies" -d ' 
+{
+	"settings": {
+		"analysis" : {
+			"filter": { // define new filter (custom)
+				"autocomplete_filter" :{ // autocomplete filter will add the edge_ngram on index time
+					"type" : "edge_ngram",
+					"min_gram": 1,
+					"max_gram": 20
+				}
+
+		},
+		"analyzer": { // define a new analyzer
+			"autocomplete" : { // autocomplete
+				"type" : "custom",
+				"tokenizer": "standard",
+				"filter": [
+							"lowercase",
+							"autocomplete_filter" // the filter we created above
+							]
+			}
+		}
+	}
+ }
+
+}
+'
+
+
+// 3. test the analyzer we just created and see that it breaks our keyword to unigarm, bigram and unigram
+// unigram [S], biagram [St], unigram[Sta]
+curl -XGET "localhost:9200/movies/_analyze?pretty" -d '
+{
+	"analyzer": "autocomplete", // our analyzer name we created above
+	"text" : "Sta" // Text keyword to test our analyzer with
+}
+'
+
+// 4. Apply our custom analyzer to our title filed and remap things appropriately
+// ** Index was already created when we created the analyzer
+curl -X PUT "localhost:9200/movies/_mapping/movie?pretty" -d'
+{
+    "movie": {
+      "properties": {
+        "id": {
+          "type": "date"
+        },
+        "year": {
+          "type": "date"
+        },
+        "genre": {
+          "type": "keyword"
+        },
+        "title": {
+          "type": "text",
+          "analyzer": "autocomplete" // Our title filed with use our analyzer on index time
+        }
+      }
+    }
+  }
+'
+
+// 5. validate mapping 
+curl -X GET "localhost:9200/_mapping/movie?pretty"
+
+// 6. bulk load the movies again (check init-elasticsearch folder)
+///////
+
+//5. Run query - Bad output
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+{ 
+	"query" : {
+		"match_phrase_prefix": { // we use //match_pharse_prefix to search by prefix or it will give us both star trek and star wars
+			"title": "sta" // This will produce the wrong output as it uses our analyzer on the query side also and due to the fact we index ngram (s) then (t) , (a) , (r)
+						   // To solve this we need to make sure the query runs on a standard analyzer
+		}
+	}
+
+}
+'
+
+
+//5. Run query - Good output
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+{ 
+	"query" : {
+		"match_phrase_prefix": { // we use //match_pharse_prefix to search by prefix or it will give us both star trek and star wars
+			"title": { "query": "star tre", "analyzer": "standard" }
+		}
+	}
+
+}
+'

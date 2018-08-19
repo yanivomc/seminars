@@ -1,0 +1,3 @@
+load Index mapping :
+	curl -H "Content-Type: application/json" -XPUT '192.169.33.9:9200/shakespeare' --data-binary @shakes-mapping.json
+	curl -H 'Content-Type: application/json' -XPOST '192.169.33.9:9200/shakespeare/doc/_bulk?pretty' --data-binary @shakespeare_6.0.json

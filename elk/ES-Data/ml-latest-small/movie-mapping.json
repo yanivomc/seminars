@@ -1,0 +1,12 @@
+{
+	"mappings": {
+		"movie": {
+			"properties": {
+				"year": {
+					"type": "date",
+					"title": {"type": "text"}
+				}
+			}
+		}
+	}
+}

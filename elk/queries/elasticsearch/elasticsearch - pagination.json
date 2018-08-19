@@ -1,0 +1,21 @@
+// Pagination - show results for page requests from  > to 
+// URI Style (not recomended for production use)
+// will show the first two results 
+curl -XGET "localhost:9200/movies/_search?size=2&pretty"
+
+// adding "from" will show the next two results 
+curl -XGET "localhost:9200/movies/_search?size=2&from=2&pretty"
+
+
+// Using Json and a query inside
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+
+{
+	"from" : 2,
+	"size" : 2,
+	"query" : {
+		"match": {"genre": "Sci-Fi"}
+	}
+}
+
+'

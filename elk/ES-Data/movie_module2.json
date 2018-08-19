@@ -1,0 +1,10 @@
+PUT movies
+{
+  "mappings": {
+    "movie":{
+      "properties": {
+        "year": {"type": "date"}
+      }
+    }
+  }
+}

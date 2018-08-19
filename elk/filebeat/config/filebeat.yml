@@ -1,0 +1,30 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/nginx_json_logs.txt
+  json.keys_under_root: true
+  document_type: logs
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+  index: "nginx_json_elastic"
+  #pipeline: nginx_json_pipeline
+
+setup.template.enabled: false
+
+####### #### #### #### #### #### #### #### #### #### #### #### 
+#### #### #### #### #### #### #### #### #### #### #### #### 
+#### The nginx log format used in this exmaple  #### #### #### 
+#### created with the following configuration #### #### #### 
+#### #### #### #### #### #### #### #### #### #### #### #### 
+####### #### #### #### #### #### #### #### #### #### #### #### 
+
+# log_format json_logstash '{ "time": "$time_local", '
+#                            '"remote_ip": "$remote_addr", '
+#                            '"remote_user": "$remote_user", '
+#                            '"request": "$request", '
+#                            '"response": "$status", '
+#                            '"bytes": "$body_bytes_sent", '
+#                            '"referrer": "$http_referer", '
+#                            '"agent": "$http_user_agent" }';
