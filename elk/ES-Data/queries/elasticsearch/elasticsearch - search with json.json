@@ -1,0 +1,106 @@
+//  Search with bool where it must have a term "title" = trek
+//  and use filter - to filter the range of years greater then 2010
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+{
+  "query": {
+    "bool": {
+      "must": {
+        "term": {
+          "title": "trek"
+        }
+      },
+      "filter": {
+        "range": {
+          "year": {
+            "gte": "2010"
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+{
+	"query": {
+		"match": {
+			"title" : "star wars"
+		}
+	}
+}
+'
+
+
+// match_phrase query &  with boolen and filter 
+
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_phrase": {
+          "title": "Star Wars"
+        }
+      },
+      "filter": {
+        "range": {
+          "year": {
+            "gte": "1980"
+          }
+        }
+      }
+    }
+  }
+}
+'
+
+
+// Match_pharse query - to match the exact pharse
+
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+{
+	"query": {
+		"match": {
+			"title" : "star wars"
+		}
+	}
+}
+'
+
+
+
+
+// Search with a slop (slop) slop represents how far we are willing to let a term movies
+// To satisfy a pharse
+// for example: 
+// searching for star beyond with a sloop of 1 can provide us with a results
+// "start trek beyond"
+// "star wars beyond" if existed 
+// "start * beyond", "start beyond *"
+
+
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+{
+  "query": {
+    "match_phrase": {
+      "title": { "query": "star beyond", "slop": "1" }
+    }
+  }
+}'
+
+
+
+//  Proxmity query - get all the documents where those two keywords are in a document
+// in a distance of up to 100 words 
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+{
+  "query": {
+    "match_phrase": {
+      "title": { "query": "star beyond", "slop": "100" }
+    }
+  }
+}'

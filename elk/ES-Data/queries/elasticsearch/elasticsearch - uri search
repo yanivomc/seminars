@@ -1,0 +1,2 @@
+## Search with URI (encoding is reuqired)
+curl -X GET "localhost:9200/movies/_search?q=%2Byear%3A%3E2010+%2btitle:star%20wars&pretty"

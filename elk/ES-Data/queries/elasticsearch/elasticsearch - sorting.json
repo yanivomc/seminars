@@ -1,0 +1,83 @@
+// sorting our data
+// URI BASE
+curl -X GET "localhost:9200/movies/_search?pretty&sort=year"
+
+
+// JSON BASE
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+
+{
+	"from" : 2,
+	"size" : 2,
+	"query" : {
+		"match": {"genre": "Sci-Fi"}
+	},
+	"sort" : "year"
+}
+
+'
+
+// Sort by a title - But our title is using analyzer which mean we cant sort it
+// Solution is to crete in our mapping a keyword field instead. 
+
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+
+{
+	"from" : 2,
+	"size" : 2,
+	"query" : {
+		"match": {"genre": "Sci-Fi"}
+	},
+	"sort" : "title"
+}
+
+'  // >> Will break with an error due to it being a text field 
+
+// the Solution is the following mapping (we need to do it beforehand 
+//	as we cant change it on running)
+1. Delete the Index -  curl -XDELETE localhost:9200/movies
+2. Create the new one
+curl -X PUT "localhost:9200/movies/" -d'
+{
+  "mappings": {
+    "movie": {
+      "properties": {
+        "id": {
+          "type": "date"
+        },
+        "year": {
+          "type": "date"
+        },
+        "genre": {
+          "type": "keyword"
+        },
+        "title": {
+          "type": "text",
+          "analyzer": "english",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+'
+3. Show the new mapping - curl -X GET "localhost:9200/movies/_mapping?pretty"
+4. Bulk load the data
+5. Run the sort again on the TITLE.RAW field
+
+
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+
+{
+	"query" : {
+		"match": {"genre": "Sci-Fi"}
+	},
+	"sort" : "title.raw" 
+}
+
+
+

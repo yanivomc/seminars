@@ -1,0 +1,56 @@
+// elasticsearch - prefix queries.json
+// Partial query base on wildcard , Prefix or Regex
+
+
+// First we need to delete our current Index or make sure the field
+// Year is a type keyword and not a date (as we cant do partial query on type date).
+
+// 1. Delete index
+curl -XDELETE localhost:9200/movies
+
+// 2. Create new index mapping with type keyword for year
+
+curl -X PUT "localhost:9200/movies" -d ' 
+{
+	"mappings" : {
+		"movie" : {
+			"properties": {
+				"year": {
+					"type" : "keyword" // Changed year to keyword type
+				}
+			}
+		}
+	}
+}
+	'
+
+
+// 3. validate mapping 
+curl -X GET "localhost:9200/_mapping/movie?pretty"
+
+// 4. bulk load the movies again (check init-elasticsearch folder)
+///////
+
+//5. prefix base query
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+{ 
+	"query" : {
+		"prefix": {
+			"year": "201" // get all the movies with year starting at 201..
+		}
+	}
+
+}
+'
+
+//6. wildcard
+curl -X GET "localhost:9200/movies/_search?pretty" -d'
+{ 
+	"query" : {
+		"wildcard": {
+			"year": "19*9" // get all the movies with year 19*9 (1909 - 1999)
+		}
+	}
+
+}
+'
