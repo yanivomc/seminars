@@ -80,6 +80,7 @@ services:
     build:
       context: filebeat/
       args:
+        #ELK_VERSION: $ELK_VERSION
         ELK_VERSION: $ELK_VERSION
     #volumes:
     #  - ./filebeat/config/:/usr/share/filebeat/filebeat.yml:ro

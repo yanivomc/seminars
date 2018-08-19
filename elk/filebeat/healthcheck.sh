@@ -16,6 +16,9 @@ elif [ $exit_code -eq 0 ]; then
         curl -XPUT -H 'Content-Type: application/json' 'elasticsearch:9200/_ingest/pipeline/nginx_json_pipeline' -d @/usr/share/filebeat/es-nginx-pipline.json
       #  curl -XPUT -H 'Content-Type: application/json' 'elasticsearch:9200/_template/nginx_json' -d @/usr/share/filebeat/es-nginx-template.json
         echo "Updates completed - Starting Filebeat"
+        echo "Loading all dashboards"
+        ./filebeat setup -E output.elasticsearch.hosts=[elasticsearch:9200] -E setup.kibana.host=kibana:5601  --dashboards
+        echo "Starting daemon"
         ./filebeat -e 
         exit 0
 else
