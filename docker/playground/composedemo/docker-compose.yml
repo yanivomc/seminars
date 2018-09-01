@@ -1,19 +1,19 @@
 version: '2.3' # Docker-compose yml version for docker compose builder
 services: 
   web: 
-   image: springtest:1
+   image: frolvlad/alpine-oraclejdk8:slim
    depends_on:
       db_mysql:
        condition: service_healthy
    volumes: 
-      - ./:/artifacts
+      - ./artifact:/artifacts
    ports: 
      - 8080
    networks: # Define netwroks per service / role
      - db_layer
      - app_layer
     
-   entrypoint: ["java", "-jar" , "-Dspring.profiles.active=mysql" , "spring-music.jar"] 
+   entrypoint: ["java", "-jar" , "-Dspring.profiles.active=mysql" , "/artifacts/spring-music.jar"] 
      
   
   
@@ -43,6 +43,6 @@ networks: # custome configuration per network defined
  app_layer:
   driver: bridge
 
-volumes:
- logicalVoloume01:
+#volumes:
+# logicalVoloume01:
 
