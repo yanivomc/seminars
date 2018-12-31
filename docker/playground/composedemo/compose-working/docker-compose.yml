@@ -1,48 +1,42 @@
 version: '2.3' # Docker-compose yml version for docker compose builder
-services: 
-  web: 
-   image: frolvlad/alpine-oraclejdk8:slim
+services:
+  web:
+   build: ./
+   image: yanivomc/web-spring
    depends_on:
       db_mysql:
        condition: service_healthy
-   volumes: 
-      - ./:/artifacts
-   ports: 
-     - 80:8080
+       #   volumes:
+       # - ./artifact:/artifacts
+   ports:
+     - 8080
    networks: # Define netwroks per service / role
-     - db_layer
-     - app_layer
-    
-   entrypoint: ["java", "-jar" , "-Dspring.profiles.active=mysql" , "/artifacts/spring-music.jar"] 
-     
-  
-  
+    - db_layer
+    - app_layer
+
+       # entrypoint: ["java", "-jar" , "-Dspring.profiles.active=mysql" , "/artifacts/spring-music.jar"]
+
   db_mysql:
     image: wangxian/alpine-mysql
-    environment: # env variables 
+    environment: # env variables
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=music
     ports:
       - 3306:3306
     networks:
       - db_layer
-    volumes: 
-      - ./mysql_data:/app
+    volumes:
+      - logicalVolume01:/app
     healthcheck:
         test: "/usr/bin/mysql --execute \"SHOW DATABASES;\""
         # test: "/usr/local/mysql/bin/mysql --user=foo --password=foo --execute \"SHOW DATABASES;\""
-        interval: 3s
-        timeout: 1s
-        retries: 5
-    
-
-
+        interval: 10s
+        timeout: 3s
+        retries: 10
 networks: # custome configuration per network defined
  db_layer:
   driver: bridge
  app_layer:
   driver: bridge
-
-#volumes:
-# logicalVoloume01:
-
+volumes:
+ logicalVolume01:
