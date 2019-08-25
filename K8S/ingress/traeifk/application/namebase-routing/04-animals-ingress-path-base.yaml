@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: animals
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+  - host: animals.jb
+    http:
+      paths:
+      - path: /bear
+        backend:
+          serviceName: bear
+          servicePort: http
+      - path: /moose
+        backend:
+          serviceName: moose
+          servicePort: http
+      - path: /hare
+        backend:
+          serviceName: hare
+          servicePort: http
