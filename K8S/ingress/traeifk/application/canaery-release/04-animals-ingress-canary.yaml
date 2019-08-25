@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    traefik.ingress.kubernetes.io/service-weights: |
+      animals-app: 80%
+      animals-app-canary: 20%
+  name: animals-app
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: animals-app
+          servicePort: 80
+        path: /
+      - backend:
+          serviceName: animals-app-canary
+          servicePort: 80
+        path: /
