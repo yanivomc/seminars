@@ -15,7 +15,7 @@ spec:
   template:
     metadata:
       labels:
-        app: animals
+        app: animals-app
         task: bear
         version: v0.0.1
     spec:
