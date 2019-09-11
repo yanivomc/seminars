@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-workshop
+spec:
+  selector:
+    matchLabels:
+      app: spring
+      type: ui
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: spring
+        type: ui
+    spec:
+      containers:
+      - name: spring-music
+        image: yanivomc/spring-music:latest #Use your own here
+        ports:
+        - containerPort: 8080

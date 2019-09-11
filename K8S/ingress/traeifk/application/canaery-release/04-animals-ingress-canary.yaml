@@ -11,10 +11,10 @@ spec:
   - http:
       paths:
       - backend:
-          serviceName: animals-app
+          serviceName: bear-app
           servicePort: 80
         path: /
       - backend:
-          serviceName: animals-app-canary
+          serviceName: moose-app-canary
           servicePort: 80
         path: /

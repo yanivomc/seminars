@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+ name: cat-etc-hosts
+spec:
+ template:
+   metadata:
+     labels:
+       run-once-daemonset: cat-etc-hosts
+   spec:
+     containers:
+     - name: cat-etc-hosts
+       image: etoews/cat-etc-hosts
+       imagePullPolicy: Always
+       volumeMounts:
+       - name: etc-hosts
+         mountPath: /node/etc/hosts
+         readOnly: true
+     volumes:
+     - name: etc-hosts
+       hostPath:
+         path: /etc/hosts
+

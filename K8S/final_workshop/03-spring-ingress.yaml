@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: springui
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: spring-ui.jb
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: springservice
+          servicePort: http
+  
