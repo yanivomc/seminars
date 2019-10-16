@@ -77,6 +77,32 @@ SSHLocation:
 ~~~
 
 ### Setting Mapping
-here we can define KV to be used later in our Stack configuration
+here  define KV to be used later in our Stack configuration to help autodetect the region we are working on and the AMI required by the instance we offer to use in our stack.
 
-TODO: Add default role in JB Account for testing
+
+The first Mapping declare Key as instance type and Value as it's Virtualization types (Paravirtualiztion / Hardware VM)
+~~~
+Mappings:
+  AWSInstanceType2Arch:
+    t1.micro:
+      Arch: PV64
+    t2.nano:
+      Arch: HVM64
+    t2.micro:
+      Arch: HVM64
+~~~~
+
+Next we configure the avilable regions where we wish to work on and thier related AMI ID (each region in AWS has it's own AMI storage and dedicated ID's)
+
+~~~
+AWSRegionArch2AMI:
+    eu-west-1:
+      PV64: ami-4cdd453f
+      HVM64: ami-f9dd458a
+    eu-west-2:
+      PV64: NOT_SUPPORTED
+      HVM64: ami-886369ec
+    eu-west-3:
+      PV64: NOT_SUPPORTED
+      HVM64: NOT_SUPPORTED
+~~~
