@@ -31,7 +31,15 @@ Description: JB sample instllation
 ~~~
 The AWSTemplateFormatVersion section (optional) identifies the capabilities of the template. The latest template format version is 2010-09-09 and is currently the only valid value.
 
-Next continue to define the Template paramters
+---
+###Next continue to define the Template paramters
+Paramters will be shown in the AWS console for the operator to choose/type
+
+Paramter screen shoot of our sample example:
+
+![alt text](https://github.com/yanivomc/seminars/blob/master/AWS/Cloudformation/cloudformation%20part%201%20-%202%20/images/stack%20details.png?raw=true "CLOUDFORMATION Paramters")
+
+
 
 ###### KEYPAIRS
 ~~~
