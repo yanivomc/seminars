@@ -5,7 +5,10 @@ Recap - we wish to build a simple EC2 instance with A security group attached to
 Follow this to understand what each part in the [Simple template](https://raw.githubusercontent.com/yanivomc/seminars/master/AWS/Cloudformation/cloudformation%20part%201%20-%202%20/cloudformation-basic-example.template.yml)
 do.
 
+Read the [refrence for CloudFormation Resource and Property Types](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) here
+
 ----
+
 #####Template base layout:
 A template always start as followed
 ~~~
@@ -105,4 +108,101 @@ AWSRegionArch2AMI:
     eu-west-3:
       PV64: NOT_SUPPORTED
       HVM64: NOT_SUPPORTED
+~~~
+
+---
+
+### Setting Resources
+In the next part we define the resources we wish to create/include in our stack.
+
+There we can also reference a KV from our mapping part.
+
+###### First we define a Security Group (SG)
+~~~
+WebServerSecurityGroup: # SG Name
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP access via port 80 locked down to the load balancer
+        + SSH access
+      SecurityGroupIngress: # Incoming traffic allowness
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp: # Define CIDR IP using a reference to our SSHLocation Parameter we defined above as an input from the operator.
+          Ref: SSHLocation
+~~~
+
+###### Now we set the Ec2 Instance
+in the EC2 Instance resources we will use built-in function to return the value of the corresponding key in our Map definitions above. The built in function called "FindMap" allows it.
+
+Read [here](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html) for more built in function
+
+We call a function as followed: "Fn::FindInMap:"
+
+~~~
+WebServerInstance: # Instance Name
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: # Define the image ID using 
+        Fn::FindInMap:
+        - AWSRegionArch2AMI
+        - Ref: AWS::Region
+        - Fn::FindInMap:
+          - AWSInstanceType2Arch
+          - Ref: InstanceType
+          - Arch
+      InstanceType:
+        Ref: InstanceType
+      SecurityGroups:
+      - Ref: WebServerSecurityGroup
+      KeyName:
+        Ref: KeyName
+~~~
+
+In our EC2 instance resource definition we can also implment something called "UserData"
+
+UserData gives us the option of passing custom user data to the instance that can be used to perform common automated configuration tasks and even run scripts after the instance starts such as installing a webserver, Configuring the EC2 instance etc...
+
+###### In our example we will use the UserData to run a few commands in bash.
+
+~~~
+      UserData:
+        Fn::Base64:
+          Fn::Join:
+          - ''
+          - - "#!/bin/bash\n"
+            - 'yum update -y
+
+'
+            - 'mkdir /tmp
+
+'
+            - 'mkdir /tmp/amol
+
+'
+~~~
+
+---
+
+### Setting OUTPUTS
+Lastly we will define our outputs that allows us to extract information from our created stack (Such as an IP of a machine) and use it in other Templates that we build/use
+
+~~~
+Outputs:
+  InstanceDNSName:
+    Value:
+      Fn::GetAtt: # Here we call up a function called GetAttribute of our  - 
+      - WebServerInstance # EC2 Resource name
+      - PublicDnsName # The EC2 Resource Public DNS NAME
+    Description: Instance DNS Name
+  InstanceIP:
+    Value:
+      Fn::GetAtt: # Same for the instance IP
+      - WebServerInstance
+      - PublicIp
+    Description: Instance IP
 ~~~
