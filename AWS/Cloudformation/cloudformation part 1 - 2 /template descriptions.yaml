@@ -1,0 +1,5 @@
+### Key pair parameter:
+paramName: # Select the name of the parmeter you wish to use
+  Description: 
+  Type: AWS::EC2::KeyPair::KeyName
+  Default:
