@@ -1,8 +1,12 @@
+paramName:
+  Description: 
+  Type: AWS::EC2::KeyPair::KeyName
+  Default: 
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: JB sample instllation # Description of our Template
-Parameters: # Here we configure the build parameters for our Stack
-  KeyName: # Setting the SSH key-pair name for our EC2 INSTANCE to use
+Description: JB sample instllation
+Parameters:
+  KeyName:
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instances
     Type: AWS::EC2::KeyPair::KeyName
     ConstraintDescription: must be the name of an existing EC2 KeyPair.
