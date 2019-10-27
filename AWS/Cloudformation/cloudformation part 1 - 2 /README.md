@@ -5,7 +5,6 @@ Recap - we wish to build a simple EC2 instance with A security group attached to
 Follow this to understand what each part in the [Simple template](https://raw.githubusercontent.com/yanivomc/seminars/master/AWS/Cloudformation/cloudformation%20part%201%20-%202%20/cloudformation-basic-example.template.yml)
 do.
 
-Read the [refrence for CloudFormation Resource and Property Types](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) here
 
 ----
 
@@ -25,26 +24,31 @@ Conditions:
 Resources: 
 
 Outputs:
-
 ~~~
-We start with declaring the version for the template
+
+---
+Our Template start with declaring the version for the template
 ~~~
 AWSTemplateFormatVersion: '2010-09-09'
 Description: JB sample instllation
 ~~~
-The AWSTemplateFormatVersion section (optional) identifies the capabilities of the template. The latest template format version is 2010-09-09 and is currently the only valid value.
+NOTE: The AWSTemplateFormatVersion section (optional) identifies the capabilities of the template. The latest template format version is 2010-09-09 and is currently the only valid value.
 
 ---
-### Next continue to define the Template paramters
-Paramters will be shown in the AWS console for the operator to choose/type
+# Parameters
 
-Paramter screen shoot of our sample example:
+Paramters will be shown in the AWS console for the operator to choose/type when he launch our Template
+
+Paramter screen shoot of our sample template example:
 
 ![alt text](https://github.com/yanivomc/seminars/blob/master/AWS/Cloudformation/cloudformation%20part%201%20-%202%20/images/stack%20details.png?raw=true "CLOUDFORMATION Paramters")
 
 
-
+### We start to define the Template paramters with:
 ###### KEYPAIRS
+Keypairs will allow us to select an SSH KEY to use when we wish to connect to our created EC2 INSTANCES
+
+Here we allow the operator to select an already created KEYPAIR
 ~~~
 paramName: # Type in a Param name you choose
   Description: 
@@ -79,8 +83,11 @@ SSHLocation:
     ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
 ~~~
 
-### Setting Mapping
-here  define KV to be used later in our Stack configuration to help autodetect the region we are working on and the AMI required by the instance we offer to use in our stack.
+---
+# MAPPING
+
+### Setting KV Mapping
+here we will define KV to be used later in our Stack configuration for helping autodetect the region we are working on and the AMI required by the instance type on that region. 
 
 
 The first Mapping declare Key as instance type and Value as it's Virtualization types (Paravirtualiztion / Hardware VM)
@@ -112,10 +119,14 @@ AWSRegionArch2AMI:
 
 ---
 
+# Resources
 ### Setting Resources
-In the next part we define the resources we wish to create/include in our stack.
 
-There we can also reference a KV from our mapping part.
+Read the [refrence for CloudFormation Resource and Property Types](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) to see all the resources we can control, define and deploy.
+
+In Our example we are only going to build one EC2 Instance and a Security group.
+
+Inside our resource we can and will reference a VALUE from our mapping KV as part of the resource configuration.
 
 ###### First we define a Security Group (SG)
 ~~~
@@ -188,7 +199,7 @@ UserData gives us the option of passing custom user data to the instance that ca
 
 ---
 
-### Setting OUTPUTS
+# OUTPUTS
 Lastly we will define our outputs that allows us to extract information from our created stack (Such as an IP of a machine) and use it in other Templates that we build/use
 
 ~~~
@@ -206,3 +217,5 @@ Outputs:
       - PublicIp
     Description: Instance IP
 ~~~
+
+
