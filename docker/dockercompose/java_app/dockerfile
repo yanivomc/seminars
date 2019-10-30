@@ -1,5 +1,0 @@
-# Java8 Alpine Release
-FROM frolvlad/alpine-oraclejdk8:slim
-#ADD . /code
-WORKDIR /code
-CMD java -jar -Dspring.profiles.active=test /code/boot-0.0.1-SNAPSHOT.jar

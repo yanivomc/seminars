@@ -1,6 +1,0 @@
-// Get Indices to validate logstash added apache logs
-//GET localhost:9200/_cat/indices?pretty
-
-// check one of the indices for data
-
-//GET localhost:9200/logstash-2017.05.05/_search?pretty
