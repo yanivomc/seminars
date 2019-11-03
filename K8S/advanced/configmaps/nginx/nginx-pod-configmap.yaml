@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: nginx-config-map
+ labels:
+  app: nginx-jb
+spec:
+ containers:
+ - name: nginx-file-pod
+   image: nginx:latest
+   ports:
+   - containerPort: 80
+   volumeMounts:
+   - name: configmap-volume
+     mountPath: /etc/config
+ volumes:
+  - name: configmap-volume
+    configMap:
+      name: nginx-proxy
