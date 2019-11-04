@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: mysql
+  template:
+    metadata:
+      labels:
+        role: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        ports:
+        - name: mysql-port
+          containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: db-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqlsvc
+spec:
+  ports:
+  - port: 3306
+    targetPort: mysql-port
+    protocol: TCP
+  selector:
+    role: mysql
+
