@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: jb-app
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+  initContainers:
+  - name: init-step1 # INIT 1 
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo This is INIT STEP 1! && sleep 5']
+  - name: init-step2
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo This is INIT STEP 2! && sleep 5']
+
+
