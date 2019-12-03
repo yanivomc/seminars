@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: sample-app
+  labels:
+    app: sample-app
+spec:
+  selector:
+    app: sample-app
+    release: my-prom
+  ports:
+  - name: http
+    port: 80

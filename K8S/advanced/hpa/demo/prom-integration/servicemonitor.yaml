@@ -1,0 +1,14 @@
+kind: ServiceMonitor
+apiVersion: monitoring.coreos.com/v1
+metadata:
+  name: sample-app
+  labels:
+    app: sample-app
+    release: my-prom
+spec:
+  selector:
+    matchLabels:
+      app: sample-app
+      release: my-prom
+  endpoints: 
+  - port: http
