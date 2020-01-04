@@ -53,3 +53,9 @@ services:
     volumes:
         - /var/run/docker.sock:/var/run/docker.sock
         #     - ./kafka-storage/zk-single-kafka-multiple/kafka3/data:/var/lib/kafka/data
+  python-dev:
+    image: python:latest
+    hostname: python
+    container_name: pythondev
+    command: ["sleep","100000"]
+
