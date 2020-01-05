@@ -2,4 +2,4 @@ docker/dockerwithmaven/java/target
 docker/playground/labs/labdockercompose/mysql_data
 docker/playground/labs/labdockercompose/artifacts
 terraform/part-2/demos/outputs/private_ips.txt
-artifacts/docker/kafka-storage
+artifacts/docker/kafka-cluster/kafka-storage
