@@ -22,3 +22,15 @@ services:
       - "kafka3:18.203.115.19"
       - "zookeeper:18.203.115.19"
 
+  datagen:
+    image: confluentinc/ksql-examples:5.3.2
+    container_name: datagen
+    hostname: datagen
+    command: ["sleep", "1000000"]
+    extra_hosts:
+      - "kafka1:18.203.115.19"
+      - "kafka2:18.203.115.19"
+      - "kafka3:18.203.115.19"
+      - "zookeeper:18.203.115.19"    
+    volumes:
+      - "./datagen:/files"

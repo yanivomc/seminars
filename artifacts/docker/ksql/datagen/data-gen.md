@@ -8,3 +8,6 @@ ksql-datagen schema=./riderequest-america.avro format=avro topic=riderequest-ame
 
 - overview https://docs.confluent.io/current/ksql/docs/tutorials/generate-custom-test-data.html
 - formats see https://github.com/confluentinc/avro-random-generator
+
+
+
