@@ -1,0 +1,8 @@
+osgi.wiring.package; (osgi.wiring.package=org.apache.commons.collections.comparators)
+162; version=3.2.2
+osgi.wiring.package; (osgi.wiring.package=org.apache.commons.logging)
+33; version=1.2.0
+osgi.wiring.package; (osgi.wiring.package=org.apache.commons.collections.keyvalue)
+162; version=3.2.2
+osgi.wiring.package; (osgi.wiring.package=org.apache.commons.collections)
+162; version=3.2.2

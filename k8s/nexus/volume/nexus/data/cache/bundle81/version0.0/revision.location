@@ -1,0 +1,1 @@
+wrap:file:system/io/swagger/swagger-core/1.5.21/swagger-core-1.5.21.jar$overwrite=merge&Import-Package=com.google.common.*,*

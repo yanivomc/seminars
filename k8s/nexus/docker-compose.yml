@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  # rancher-server:
+  #   image: rancher/rancher:latest
+  #   restart: unless-stopped
+  #   volumes: 
+  #     - ./volume/rancher-data/:/var/lib/rancher
+  #     - ./volume/rancher-audit/:/var/log/auditlog
+  #     - ./data/nginx/certs/fullchain.pem:/etc/rancher/ssl/cert.pem
+  #     - ./data/nginx/certs/privkey.pem:/etc/rancher/ssl/key.pem
+  #     # - ./data/nginx/certs/ca.pem:/etc/rancher/ssl/ca.pem
+  #   environment:
+  #    - AUDIT_LEVEL=1
+  #    - CATTLE_SYSTEM_DEFAULT_REGISTRY=rancher-qa.devopshift.com
+  #   ports:
+  #     - "80:80"
+  #     - "9443:443"
+  #   networks:
+  #     - rancher
+  #   command:
+  #     - --no-cacerts
+ 
+  nginx:
+    image: nginx:1.15-alpine
+    restart: unless-stopped
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+      - "443:443"
+      - "5000:5000"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    networks:
+      - nexus
+  
+  nexus:
+      image: sonatype/nexus3
+      restart: unless-stopped
+      volumes: 
+        - ./volume/nexus/data:/nexus-data
+      environment:
+        - NEXUS_CONTEXT=nexus
+      networks:
+       - nexus
+   
+  
+networks:
+  nexus:

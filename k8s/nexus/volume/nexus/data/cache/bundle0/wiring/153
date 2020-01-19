@@ -1,0 +1,8 @@
+osgi.wiring.package; (osgi.wiring.package=javax.xml.namespace)
+0; version=0.0.0
+osgi.wiring.package; (osgi.wiring.package=javax.xml.bind.annotation)
+0; version=2.2.8
+osgi.wiring.package; (osgi.wiring.package=javax.xml.bind.annotation.adapters)
+0; version=2.2.8
+osgi.wiring.package; (osgi.wiring.package=javax.net.ssl)
+0; version=0.0.0

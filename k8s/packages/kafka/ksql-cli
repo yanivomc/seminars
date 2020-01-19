@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ksql-cli
+  labels:
+    app: ksql-cli
+spec:
+  containers:
+  - name: ksql-cli
+    # get latest version of image
+    image:   confluentinc/cp-ksql-cli
+    imagePullPolicy: IfNotPresent
+    command:
+      - sh
+      - -c
+      - "exec tail -f /dev/null"
+    env:
+    - name: KSQL_BOOTSTRAP_SERVERS
+      value: "kafka-broker:9092"
+    - name: KSQL_KSQL_SERVICE_ID
+      value: "confluent_standalone_2_"
+    - name: KSQL_KSQL_QUERIES_FILE
+      value: "/path/in/container/queries.sql"
+    - name: KSQL_LISTENERS
+      value: "http://0.0.0.0:8088/"
+    ports:
+    # containerPort is the port exposed by the container (where ksql server is listening)
+    - containerPort: 8088

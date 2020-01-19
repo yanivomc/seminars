@@ -1,0 +1,1 @@
+wrap:file:system/org/quartz-scheduler/quartz/2.3.0/quartz-2.3.0.jar$overwrite=merge&Import-Package=*;resolution:=optional

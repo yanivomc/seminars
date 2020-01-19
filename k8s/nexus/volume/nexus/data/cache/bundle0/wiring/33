@@ -1,0 +1,10 @@
+osgi.wiring.package; (osgi.wiring.package=javax.xml.parsers)
+0; version=0.0.0
+osgi.wiring.package; (&(osgi.wiring.package=org.osgi.framework)(version>=1.0.0)(!(version>=2.0.0)))
+0; version=1.8.0
+osgi.wiring.package; (&(osgi.wiring.package=org.osgi.framework.wiring)(version>=1.0.0)(!(version>=2.0.0)))
+0; version=1.2.0
+osgi.wiring.package; (&(osgi.wiring.package=org.osgi.util.tracker)(version>=1.0.0)(!(version>=2.0.0)))
+0; version=1.5.1
+osgi.wiring.package; (osgi.wiring.package=org.w3c.dom)
+0; version=0.0.0

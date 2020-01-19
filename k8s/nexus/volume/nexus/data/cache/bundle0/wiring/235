@@ -1,0 +1,8 @@
+osgi.wiring.package; (osgi.wiring.package=org.apache.log4j)
+33; version=1.2.15
+osgi.wiring.package; (&(osgi.wiring.package=org.slf4j)(version>=1.6.0))
+33; version=1.7.25
+osgi.wiring.package; (&(osgi.wiring.package=org.jboss.logging)(version>=3.1.0))
+33; version=3.3.0.Final
+osgi.wiring.package; (&(osgi.wiring.package=org.slf4j.spi)(version>=1.6.0))
+33; version=1.7.25

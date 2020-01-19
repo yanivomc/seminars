@@ -1,0 +1,16 @@
+osgi.wiring.package; (osgi.wiring.package=javax.naming.ldap)
+0; version=0.0.0
+osgi.wiring.package; (osgi.wiring.package=javax.naming)
+0; version=0.0.0
+osgi.wiring.package; (osgi.wiring.package=javax.crypto.spec)
+0; version=0.0.0
+osgi.wiring.package; (osgi.wiring.package=javax.sql)
+0; version=0.0.0
+osgi.wiring.package; (&(osgi.wiring.package=org.apache.commons.beanutils)(version>=1.8.0))
+122; version=1.9.2
+osgi.wiring.package; (osgi.wiring.package=javax.naming.directory)
+0; version=0.0.0
+osgi.wiring.package; (&(osgi.wiring.package=org.slf4j)(version>=1.6.0))
+33; version=1.7.25
+osgi.wiring.package; (osgi.wiring.package=javax.crypto)
+0; version=0.0.0
