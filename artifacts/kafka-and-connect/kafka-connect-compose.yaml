@@ -1,0 +1,165 @@
+version: '3.2'
+services:
+    fluentd-agile:
+      container_name: fluentd-agile
+      build:
+        context: ./
+        dockerfile: Dockerfile-fluentd
+      volumes:
+        - ./fluentd/conf:/fluentd/etc
+      ports:
+        - "24228:24224"
+        - "24228:24224/udp"
+      networks:
+        - agile-network
+    zookeeper-agile-node1:
+      image: zookeeper:3.4.9
+      hostname: zookeeper-agile-node1
+      container_name: zookeeper-agile-node1
+      ports:
+        - 2190:2181
+      volumes:
+      - ../zookeeperkafka-data/vol1/zk-data:/data_logs_dir
+      - ../zookeeperkafka-data/vol2/zk-txn-logs:/logs_dir
+      restart: always
+      environment:
+          ZOO_MY_ID: 1
+          ZOO_PORT: 2181
+          ZOO_SERVERS: server.1=zookeeper-agile-node1:2888:3888
+          ZOO_LOG4J_PROP: /logs_dir
+          ZOO_DATA_LOG_DIR: /data_logs_dir
+      networks:
+        - agile-network
+
+    kafka-agile-node1:
+      image: confluentinc/cp-kafka:5.1.0
+      hostname: kafka1
+      container_name: kafka1
+      ports:
+        - target: 9094
+          published: 9094
+          protocol: tcp
+          mode: host
+      volumes:
+        - ../zookeeperkafka-data/vol3/kafka-data:/logs
+      restart: always
+      environment:
+        KAFKA_ZOOKEEPER_CONNECT: "zookeeper-agile-node1:2181"
+        KAFKA_CREATE_TOPICS: log-messages:1:1,connect-config:1:1:compact,connect-offset:1:1:compact,connect-status:1:1:compact
+        KAFKA_BROKER_ID: 1
+        KAFKA_LOG_DIRS: /logs
+        KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+        KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+        KAFKA_REPLICA_FETCH_MAX_BYTES: 2048576
+        KAFKA_PRODUCER_MAX_REQUEST_SIZE: 2048576
+        KAFKA_CONSUMER_MAX_PARTITION_FETCH_BYTES: 2048576
+        HOSTNAME_COMMAND: "hostname"
+        KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+        KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka1:9092,OUTSIDE://kafka1:9094
+        KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+        KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+
+      depends_on:
+        - zookeeper-agile-node1
+      networks:
+        - agile-network
+
+    kafka_connect:
+      container_name: kafka_connect
+      build:
+        context: ./
+        dockerfile: Dockerfile-kafka-connect
+      depends_on:
+        - kafka-agile-node1
+        - elasticsearch-agile-one
+      ports:
+        - 8181:8083
+      links:
+        - kafka-agile-node1
+        - elasticsearch-agile-one
+      environment:
+        CONNECT_BOOTSTRAP_SERVERS: kafka1:9092
+        CONNECT_GROUP_ID: 1
+        CONNECT_CONFIG_STORAGE_TOPIC: connect-config
+        CONNECT_OFFSET_STORAGE_TOPIC: connect-offset
+        CONNECT_STATUS_STORAGE_TOPIC: connect-status
+        CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+        CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+        CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+        CONNECT_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+        CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+        CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+        CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+        CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+        CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+        CONNECT_REST_ADVERTISED_HOST_NAME: localhost
+        CONNECT_PLUGIN_PATH: "/usr/share/java,/opt/connectors"
+      networks:
+        - agile-network
+
+    kafka-connect-ui:
+      container_name: kafka-connect-ui
+      image: landoop/kafka-connect-ui:0.9.7
+      hostname: kafka-connect-ui
+      ports:
+        - "8003:8000"
+      environment:
+        CONNECT_URL: "http://kafka_connect:8083/"
+        PROXY: "true"
+      depends_on:
+        - kafka_connect
+      networks:
+        - agile-network
+
+    elasticsearch-agile-one:
+      image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+      container_name: elasticsearch-agile-one
+      restart: always
+      environment:
+        - node.name=elasticsearch-agile-one
+        - cluster.name=docker-agile-cluster
+        - bootstrap.memory_lock=true
+        - http.cors.enabled=true
+        - http.cors.allow-origin=*
+        - discovery.seed_hosts=elasticsearch-agile-one
+        - cluster.initial_master_nodes=elasticsearch-agile-one
+        - cluster.routing.allocation.disk.threshold_enabled=false
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      ulimits:
+        nproc: 65535
+        memlock:
+          soft: -1
+          hard: -1
+      volumes:
+        - ../elasticsearch-data/elk-one/logs:/var/log
+        - ../elasticsearch-data/elk-one/data:/usr/share/elasticsearch/data
+      networks:
+        - agile-network
+      ports:
+        - 9200:9200
+        - 9300:9300
+
+    kibana-agile:
+      image: 'docker.elastic.co/kibana/kibana:7.4.0'
+      container_name: kibana-agile
+      environment:
+        - ELASTICSEARCH_HOSTS=http://elasticsearch-agile-one:9200
+      ports:
+        - '5601:5601'
+      networks:
+        - agile-network
+
+    python-app-test:
+      container_name: python-app-test
+      build:
+        context: ./
+        dockerfile: Dockerfile-python-app-test.yaml
+      ports:
+        - "7500:611"
+      volumes:
+        - ./python-app-test/:/usr/src/app
+        - ../agilecx-data/logs/:/usr/src/logs
+      networks:
+      - agile-network
+networks:
+  agile-network:
