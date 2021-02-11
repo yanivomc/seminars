@@ -1,6 +1,6 @@
 ---
 kind: Deployment
-apiVersion: app/v1
+apiVersion: apps/v1
 metadata:
   name: bear
   labels:
@@ -26,7 +26,7 @@ spec:
         - containerPort: 80
 ---
 kind: Deployment
-apiVersion: app/v1
+apiVersion: apps/v1
 metadata:
   name: moose
   labels:
@@ -52,7 +52,7 @@ spec:
         - containerPort: 80
 ---
 kind: Deployment
-apiVersion: app/v1
+apiVersion: apps/v1
 metadata:
   name: hare
   labels:
