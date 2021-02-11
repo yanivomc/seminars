@@ -26,7 +26,7 @@ spec:
         - containerPort: 80
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: app/v1
 metadata:
   name: moose
   labels:
@@ -52,7 +52,7 @@ spec:
         - containerPort: 80
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: app/v1
 metadata:
   name: hare
   labels:
