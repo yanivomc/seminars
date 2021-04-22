@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: animals-moose
+  labels:
+    app: animals
+spec:
+  containers:
+  - name: moose
+    image: supergiantkir/animals:moose
+    ports:
+    - containerPort: 80

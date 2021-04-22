@@ -1,24 +1,23 @@
-apiVersion: v1 
-kind: Pod  
-metadata: 
- name: nginx 
+apiVersion: v1
+kind: Pod 
+metadata:
+name: nginx
 spec:
- containers: 
- - name: nginx 
-   image: nginx:1.7.9 
-   ports: 
-   - containerPort: 80
-   volumeMounts:
-    - name: app-storage
-      mountPath: /storage
- - name: springapp
-   image: yanivomc/spring-music:latest
-   ports: 
-   - containerPort: 8080
-   volumeMounts:
-    - name: app-storage
-      mountPath: /storage
- volumes:
-  - name: app-storage
-    emptyDir: {}
-
+containers:
+- name: nginx
+  image:supergiantkir/animals:bear
+  ports:
+  - containerPort: 80
+  volumeMounts:
+   - name: app-storage
+     mountPath: /storage
+- name: springapp
+  image: yanivomc/spring-music:latest
+  ports:
+  - containerPort: 8080
+  volumeMounts:
+   - name: app-storage
+     mountPath: /storage
+volumes:
+ - name: app-storage
+   emptyDir: {}
