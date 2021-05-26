@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
       - name: hello-Pod
-        image: educative/k8sbook:latest
+        image: supergiantkir/animals:bear
         ports:
         - containerPort: 8080
