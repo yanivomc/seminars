@@ -34,9 +34,12 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: oauth2-proxy
-          servicePort: 4180
+          service:
+            name: oauth2-proxy
+            port:
+              number: 4180
         path: /oauth2
+        pathType: Prefix
   tls:
   - hosts:
     - 54.216.243.124.nip.io
