@@ -14,7 +14,7 @@ spec:
   - host: 54.216.243.124.nip.io
     http:
       paths:
-      - path: /
+      - path: /moose(|$)(.*)
         pathType: Exact
         backend:
           service:
