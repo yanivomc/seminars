@@ -9,6 +9,7 @@ metadata:
   name: external-auth-oauth2
 
 spec:
+ ingressClassName: nginx
  rules:
   # change the IP below based on the DNS resolution of your LB (under kubectl get svc -n ingress-nginx)
   - host: 54.216.243.124.nip.io
@@ -28,6 +29,7 @@ kind: Ingress
 metadata:
   name: oauth2-proxy
 spec:
+  ingressClassName: nginx
   rules:
   - host: 54.216.243.124.nip.io
     http:
