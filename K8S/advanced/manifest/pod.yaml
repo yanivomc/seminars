@@ -13,3 +13,20 @@ spec:
    image: yanivomc/spring-music:latest
    ports: 
    - containerPort: 8080
+
+---
+
+apiVersion: v1 
+kind: Pod  
+metadata: 
+ name: animals 
+spec:
+ containers: 
+ - name: bear
+   image: supergiantkir/animals:bear
+   ports: 
+   - containerPort: 80
+ - name: moose
+   image: supergiantkir/animals:moose
+   ports: 
+   - containerPort: 80
