@@ -10,6 +10,6 @@ spec:
    ports: 
    - containerPort: 80
  - name: springapp
-   image: yanivomc/spring-music:latest
+   image: nginx:latest
    ports: 
    - containerPort: 8080
