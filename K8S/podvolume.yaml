@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: springvolume
+spec:
+  containers:
+  - name: bear
+    image: supergiantkir/animals:bear
+    volumeMounts:
+    - name: animals-persistent-storage
+      mountPath: /data/redis
+  - name: moose
+    image: supergiantkir/animals:moose
+    volumeMounts:
+    - name: animals-persistent-storage
+      mountPath: /app/data
+  volumes:
+  - name: animals-persistent-storage
+    hostPath: 
+      path: /tmp/files
