@@ -10,7 +10,7 @@ spec:
     - name: animals-persistent-storage
       mountPath: /data/redis
   - name: moose
-    image: supergiantkir/animals:moose
+    image: yanivomc/spring-music:latest
     volumeMounts:
     - name: animals-persistent-storage
       mountPath: /app/data
