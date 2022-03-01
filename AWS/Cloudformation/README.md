@@ -2,7 +2,7 @@
 ### Template made easy
 Recap - we wish to build a simple EC2 instance with A security group attached to it.
 
-Follow this to understand what each part in the [Simple template](https://raw.githubusercontent.com/yanivomc/seminars/master/AWS/Cloudformation/cloudformation%20part%201%20-%202%20/cloudformation-basic-example.template.yml)
+Follow this to understand what each part in the [Simple template](https://raw.githubusercontent.com/yanivomc/seminars/master/AWS/Cloudformation/cloudformation-basic-example.template.yml)
 do.
 
 
@@ -41,7 +41,7 @@ Paramters will be shown in the AWS console for the operator to choose/type when 
 
 Paramter screen shoot of our sample template example:
 
-![alt text](https://github.com/yanivomc/seminars/blob/master/AWS/Cloudformation/cloudformation%20part%201%20-%202%20/images/stack%20details.png?raw=true "CLOUDFORMATION Paramters")
+![alt text](https://github.com/yanivomc/seminars/blob/master/AWS/Cloudformation/images/stack%20details.png?raw=true "CLOUDFORMATION Paramters")
 
 
 ### We start to define the Template paramters with:
