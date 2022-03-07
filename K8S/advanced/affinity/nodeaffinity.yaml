@@ -12,15 +12,15 @@ spec:
             operator: In
             values:
             - eu-west-1b
-            - eu-west-2b
+            - eu-west-1c
       preferredDuringSchedulingIgnoredDuringExecution:
       - weight: 1
         preference:
           matchExpressions:
-          - key: topology.kubernetes.io/region
+          - key: node.kubernetes.io/instance-type
             operator: In
             values:
-            - eu-west-1
+            - t3.large
   containers:
   - name: spring-music
     image: yanivomc/spring-music:latest
