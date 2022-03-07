@@ -4,19 +4,17 @@ metadata:
   name: redis
 spec:
   containers:
-  - name: redis
-    image: redis
+  - name: app1
+    image: supergiantkir/animals:bear
     volumeMounts:
-    - name: redis-persistent-storage
-      mountPath: /data/redis
-  - name: springapp
+    - name: app-storage
+      mountPath: /storage
+  - name: app2
     image: yanivomc/spring-music:latest
     volumeMounts:
-    - name: redis-persistent-storage
-      mountPath: /app/data
+    - name: app-storage
+      mountPath: /storage
   volumes:
-  - name: redis-persistent-storage
-    emptyDir: {}
-
-
-
+  - name: app-storage
+    hostPath:
+      path: /tmp/files
