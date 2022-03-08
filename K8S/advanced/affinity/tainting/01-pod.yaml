@@ -47,8 +47,7 @@ spec:
     imagePullPolicy: IfNotPresent
   tolerations:
     - key: "applications"
-      operator: "Equal"
-      value: "ui"
+      operator: "Exists"
       effect: "PreferNoSchedule"
 
 ---
