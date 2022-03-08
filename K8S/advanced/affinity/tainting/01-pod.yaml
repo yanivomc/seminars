@@ -1,3 +1,4 @@
+#### Please taint your Node with applications=frontends:NoSchedule
 apiVersion: v1
 kind: Pod
 metadata:
