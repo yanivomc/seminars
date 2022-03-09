@@ -8,12 +8,14 @@ Install ISTIO
 3. Set K8S Context to ISTIO
 3.1 chmod ug+wr  /home/ubuntu/.kube/config
 3.2 kubectl config set-context --current --namespace=istio-system
+3.3 Install ISTIO : istioctl install --set profile=demo
+the demo profile which will include  we need.
 4. Validate ISTIO and install ADDONS
 4.1 istioctl x precheck
-4.2 kubectl apply -f istio-1.13.0/samples/addons/grafana.yaml
-4.3 kubectl apply -f istio-1.13.0/samples/addons/jaeger.yaml
-4.4 kubectl apply -f istio-1.13.0/samples/addons/kiali.yaml
-4.5 kubectl apply -f istio-1.13.0/samples/addons/prometheus.yaml
+4.2 kubectl apply -f istio-1.13.?/samples/addons/grafana.yaml
+4.3 kubectl apply -f istio-1.13.?/samples/addons/jaeger.yaml
+4.4 kubectl apply -f istio-1.13.?/samples/addons/kiali.yaml
+4.5 kubectl apply -f istio-1.13.?/samples/addons/prometheus.yaml
 
 
 
