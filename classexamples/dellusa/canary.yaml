@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-bear
+  labels:
+    app: spring-music
+    tier: frontend
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:  
+    matchLabels:
+      app: spring-bear
+  template:  
+    metadata:
+      labels:
+        app: spring-bear
+        type: canary-animals
+    spec:
+      containers:
+        - name: springmusic
+          image: "supergiantkir/animals:bear"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-moose
+  labels:
+    app: spring-music
+    tier: frontend
+spec:
+  replicas: 2
+  strategy:
+    type: Recreate
+  selector:  
+    matchLabels:
+      app: spring-music
+  template:  
+    metadata:
+      labels:
+        app: spring-music
+        type: canary-animals
+    spec:
+      containers:
+        - name: springmusic
+          image: "supergiantkir/animals:moose"
+  
+---
+apiVersion: v1
+kind: Service      # Create new service 
+metadata:
+  name: my-service # Name of the service
+spec:
+  selector:
+    type: canary-animals
+  ports:          # Map incoming port to target port
+  - name: http-web    # Setting multiple ports listterns 
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
