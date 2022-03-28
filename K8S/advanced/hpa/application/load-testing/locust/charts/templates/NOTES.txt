@@ -1,0 +1,8 @@
+1. Get the application URL by running these commands:
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available (Ignore the LB SYNC ERROR)
+     You can watch the status of the LB by running:
+     'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ .Release.Name }}-svc'
+2. Once the LoadBalancer EXTERNAL-IP is available You can run the following command the extract the application URL    
+    2.1 export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ .Release.Name }}-svc --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+    2.3 echo http://$SERVICE_IP:{{ .Values.service.port }}
+
