@@ -1,0 +1,17 @@
+# Gateway describes a load balancer operating at the edge of the mesh receiving incoming or outgoing HTTP/TCP connections. 
+# The specification describes a set of ports that should be exposed, the type of protocol to use, SNI configuration for the load
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: spring-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: http
+      hosts:
+        - 52.16.3.58.nip.io

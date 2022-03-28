@@ -17,7 +17,12 @@ the demo profile which will include  we need.
 4.4 kubectl apply -f istio-1.13.?/samples/addons/kiali.yaml
 4.5 kubectl apply -f istio-1.13.?/samples/addons/prometheus.yaml
 
+-------
+Enable SIDE CAR
+Set the side car proxies to be automatically created for any pods in the "spring" namespace.
+kubectl create namespace spring
+kubectl label namespace spring istio-injection=enabled
 
-
-######Patch Kiali , jagger , Grafana to type LB
-kubectl edit svc kiali ....
+kubectl apply -f examples/00-spring-deployment.yaml
+kubectl apply -f examples/01-gateway.yaml
+kubectl apply -f examples/02-virtualservice.yaml

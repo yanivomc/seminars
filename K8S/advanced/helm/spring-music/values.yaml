@@ -1,0 +1,13 @@
+container:
+        repo: yanivomc
+        image: spring-music
+        tag: latest
+        port: 8080
+databaseProd:
+  dbname: db_mysql
+  dbtable: music
+databaseTest:
+  dbname: db_mysql-test
+  dbtable: music
+pods:
+  image: yanivomc/spring-music

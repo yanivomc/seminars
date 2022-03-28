@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name:  {{ .Release.Name }}-deployment
+ namespace: default
+spec:
+ selector:
+   matchLabels:
+     app: spring-music
+ replicas: 1
+ template:
+   metadata:
+     labels:
+       app: spring-music
+       version: "1.0"
+   spec:
+     containers:
+     - name: music
+       image: {{ .Values.container.repo }}/{{ .Values.container.image}}:{{ .Values.container.tag }}
+       ports:
+       - containerPort: {{ .Values.container.port }}
+       env:
+         - name: DBNAME
+           valueFrom:
+                   configMapKeyRef:
+                           name: {{ .Release.Name }}-configmap
+                           key: dbname
