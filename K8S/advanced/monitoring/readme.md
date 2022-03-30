@@ -1,4 +1,4 @@
-#Lest start by installing Promethous:
+# Lest start by installing Promethous:
 The below procedure will install Prometheous , Grafana & AlertManager along with NodeExporter.
 
 
@@ -28,7 +28,7 @@ prometheus-kube-prometheus-prometheus     LoadBalancer   100.71.57.amazonaws.com
 ~~~
 
 5. Browse Grafana:
-######USER: admin Password: prom-operator
+USER: admin Password: prom-operator
 5. Prometheous
 
 
