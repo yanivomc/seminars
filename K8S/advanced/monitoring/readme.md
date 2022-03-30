@@ -1,4 +1,4 @@
-#<b>Lest start by installing Promethous:</b>
+#Lest start by installing Promethous:
 The below procedure will install Prometheous , Grafana & AlertManager along with NodeExporter.
 
 
