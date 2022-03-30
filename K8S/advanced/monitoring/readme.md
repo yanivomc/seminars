@@ -45,7 +45,7 @@ prometheus-kube-prometheus-prometheus     LoadBalancer   100.71.57.amazonaws.com
 
 5. Browse Grafana:
 ~~~
-export ALBHOST="http://"$(kubectl  get svc prometheus-grafana --output jsonpath='{.status.loadBalancer.ingress[:1].hostname}'):80 && echo $ALBHOST
+export ALBHOST="http://"$(kubectl  get svc prometheus-grafana --output jsonpath='{.status.loadBalancer.ingress[:1].hostname}'):80/dashboards && echo $ALBHOST
 ~~~
 USER: admin Password: prom-operator
 5. Browse Prometheous:
