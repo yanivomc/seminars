@@ -3,11 +3,27 @@ The below procedure will install Prometheous , Grafana & AlertManager along with
 
 
 
-1. Install helm 
+1. Install helm and metricserver
 ~~~
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh
+~~~
+To check if Metric server is already installed run:
+~~~
+kubectl get deployments/metrics-server -n kube-system
+~~~
+install it using the following if missing:
+~~~
+kubectl apply -f https://raw.githubusercontent.com/yanivomc/seminars/K8S/K8S/advanced/hpa/metricserver/components.yaml
+~~~
+VERIFY:
+~~~
+kubectl api-resources | grep metrics
+(expected results)
+nodes  metrics.k8s.io/v1beta1  false   NodeMetrics
+pods  metrics.k8s.io/v1beta1 true PodMetrics
+
 ~~~
 2. Add Promethous Repo:
 ~~~
@@ -15,9 +31,9 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo update
 ~~~
 3. Install Prometheous using our custom Value file
-######Dont forget to download prometheus-values.yaml from this repo
+
 ~~~
-helm install prometheus prometheus-community/kube-prometheus-stack --values prometheus-values.yaml
+helm upgrade  prometheus prometheus-community/kube-prometheus-stack --values https://raw.githubusercontent.com/yanivomc/seminars/K8S/K8S/advanced/monitoring/prometheus-values.yaml
 ~~~
 4. Check SVC 
 ~~~
