@@ -1,37 +1,47 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app.kubernetes.io/name: prometheus-example-app
-  name: prometheus-example-app
+  name: metrics-app
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      app.kubernetes.io/name: prometheus-example-app
+      app: metrics-app
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: prometheus-example-app
+        app: metrics-app
     spec:
       containers:
-      - name: prometheus-example-app
-        image: quay.io/brancz/prometheus-example-app:v0.3.0
+      - name: metrics-app
+        image: yanivomc/metrics_app
         ports:
         - name: web
           containerPort: 8080
 ---
-
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
-  name: example-app
+  name: metrics-app-monitor
   labels:
     team: frontend
 spec:
   selector:
     matchLabels:
-      app: prometheus-example-app
+      app: metrics-app
   podMetricsEndpoints:
   - port: web
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: example-app
+  labels:
+    app: example-app
+spec:
+  selector:
+    app: example-app
+  ports:
+  - name: web
+    port: 8080
