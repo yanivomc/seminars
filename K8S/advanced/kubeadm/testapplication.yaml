@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-pod-affinity
+  name: testapp
   labels:
     app: spring-music
     tier: frontend

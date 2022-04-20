@@ -54,10 +54,14 @@ Create file:
 kind: ClusterConfiguration
 apiVersion: kubeadm.k8s.io/v1beta3
 kubernetesVersion: v1.23.5
+networking:
+  serviceSubnet: "10.96.0.0/16"
+  podSubnet: "10.244.0.0/24"
 ---
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
 cgroupDriver: systemd
+
 
 
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --config kubeadm-config.yaml
@@ -191,3 +195,12 @@ You can use kubeadm reset on the control plane host to trigger a best-effort cle
 
 
 ## Lets deploy a test applicaion:
+kubectl apply -f https://raw.githubusercontent.com/yanivomc/seminars/K8S/K8S/advanced/kubeadm/testapplication.yaml
+
+Now expose it as TYPE NODEPORT
+kubectl expose <deployment name> --type NodePort --port 8080
+
+Browse it: 
+http://<REMOTE PUBLIC IP>:<NODEPORT>
+
+
