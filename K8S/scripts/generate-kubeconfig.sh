@@ -55,4 +55,3 @@ cat "$KUBECONFIG"
 printf "\n\n******  END COPY EXCLUDE THIS LINE ******\n\n" >&2
 echo "Create a ~/.kube/config-jb in your local machine and paste the above into it"
 echo "Once pasted run: export KUBECONFIG=~/.kube/config-jb && kubectl config use-context dev-jb"
-# vim: ft=sh :
