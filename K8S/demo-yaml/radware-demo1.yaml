@@ -13,3 +13,14 @@ spec:
    ports: 
    - containerPort: 8080
 
+---
+apiVersion: v1 # K8S API Version
+kind: Pod  # Object Type
+metadata: 
+ name: music  
+spec:
+ containers: 
+ - name: music-fe 
+   image: yanivomc/spring-music:latest
+   ports: 
+   - containerPort: 8080
