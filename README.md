@@ -5,7 +5,4 @@
 ~~~
 $ ls 
 this is a code snipt
-~~~
-asdfa sdas
-afs
-dfasd 
+
