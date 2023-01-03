@@ -1,5 +1,5 @@
 # NOTE: The affinity on this pod defines one pod affinity rule and one pod anti-affinity rule. 
-# podAffinity is  requiredDuringSchedulingIgnoredDuringExecution while
+# podAffinity is  requiredDuringSchedulingIgnoredDuringExecution while,
 # podAntiAffinity is preferredDuringSchedulingIgnoredDuringExecution. 
 
 apiVersion: apps/v1
