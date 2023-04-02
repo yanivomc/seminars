@@ -33,7 +33,7 @@ helm repo update
 3. Install Prometheous using our custom Value file
 
 ~~~
-helm upgrade  prometheus prometheus-community/kube-prometheus-stack --values https://raw.githubusercontent.com/yanivomc/seminars/K8S/K8S/advanced/monitoring/prometheus-values.yaml
+helm upgrade -i prometheus prometheus-community/kube-prometheus-stack --values https://raw.githubusercontent.com/yanivomc/seminars/K8S/K8S/advanced/monitoring/prometheus-values.yaml
 ~~~
 4. Check SVC 
 ~~~
